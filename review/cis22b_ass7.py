@@ -24,9 +24,18 @@ class Dice:
             print(sum)
       return sum
 
-d = Dice()
-d.roll()
-        
-        
-        
-        
+class Player:
+   def __init__(self, name: str, rolls_per_turn: int):
+      self.name = name
+      self.rolls_per_turn = rolls_per_turn
+      self.points = 0
+
+   def __str__(self) -> str:
+      return self.name
+
+
+if __name__ == '__main__':
+   d = Dice()
+   d.roll()
+   joe = Player("Joe", 5)
+   print(joe)
