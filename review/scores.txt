@@ -1,0 +1,91 @@
+10-Sep Kansas City Chiefs 34, Houston Texans 20
+13-Sep Seattle Seahawks 38, Atlanta Falcons 25
+13-Sep New England Patriots 21, Miami Dolphins 11
+13-Sep Las Vegas Raiders 34, Carolina Panthers 30
+13-Sep Baltimore Ravens 38, Cleveland Browns 6
+13-Sep Washington Football Team 27, Philadelphia Eagles 17
+13-Sep Chicago Bears 27, Detroit Lions 23
+13-Sep Buffalo Bills 27, New York Jets 17
+13-Sep Jacksonville Jaguars 27, Indianapolis Colts 20
+13-Sep Green Bay Packers 43, Minnesota Vikings 34
+13-Sep Los Angeles Chargers 16, Cincinnati Bengals 13
+13-Sep Arizona Cardinals 24, San Francisco 49ers 20
+13-Sep New Orleans Saints 34, Tampa Bay Buccaneers 23
+13-Sep Los Angeles Rams 20, Dallas Cowboys 17
+14-Sep Pittsburgh Steelers 26, New York Giants 16
+14-Sep Tennessee Titans 16, Denver Broncos 14
+17-Sep Cleveland Browns 35, Cincinnati Bengals 30
+20-Sep Green Bay Packers 42, Detroit Lions 21
+20-Sep Buffalo Bills 31, Miami Dolphins 28
+20-Sep Indianapolis Colts 28, Minnesota Vikings 11
+20-Sep San Francisco 49ers 31, New York Jets 13
+20-Sep Dallas Cowboys 40, Atlanta Falcons 39
+20-Sep Tennessee Titans 33, Jacksonville Jaguars 30
+20-Sep Tampa Bay Buccaneers 31, Carolina Panthers 17
+20-Sep Los Angeles Rams 37, Philadelphia Eagles 19
+20-Sep Chicago Bears 17, New York Giants 13
+20-Sep Pittsburgh Steelers 26, Denver Broncos 21
+20-Sep Arizona Cardinals 30, Washington Football Team 15
+20-Sep Kansas City Chiefs 23, Los Angeles Chargers 20
+20-Sep Baltimore Ravens 33, Houston Texans 16
+20-Sep Seattle Seahawks 35, New England Patriots 30
+21-Sep Las Vegas Raiders 34, New Orleans Saints 24
+24-Sep Miami Dolphins 31, Jacksonville Jaguars 13
+27-Sep Tennessee Titans 31, Minnesota Vikings 30
+27-Sep Philadelphia Eagles 23, Cincinnati Bengals 23
+27-Sep Pittsburgh Steelers 28, Houston Texans 21
+27-Sep Buffalo Bills 35, Los Angeles Rams 32
+27-Sep San Francisco 49ers 36, New York Giants 9
+27-Sep Chicago Bears 30, Atlanta Falcons 26
+27-Sep Cleveland Browns 34, Washington Football Team 20
+27-Sep New England Patriots 36, Las Vegas Raiders 20
+27-Sep Indianapolis Colts 36, New York Jets 7
+27-Sep Carolina Panthers 21, Los Angeles Chargers 16
+27-Sep Seattle Seahawks 38, Dallas Cowboys 31
+27-Sep Tampa Bay Buccaneers 28, Denver Broncos 10
+27-Sep Detroit Lions 26, Arizona Cardinals 23
+27-Sep Green Bay Packers 37, New Orleans Saints 30
+28-Sep Kansas City Chiefs 34, Baltimore Ravens 20
+1-Oct Denver Broncos 37, New York Jets 28
+4-Oct Cleveland Browns 49, Dallas Cowboys 38
+4-Oct Carolina Panthers 31, Arizona Cardinals 21
+4-Oct Indianapolis Colts 19, Chicago Bears 11
+4-Oct New Orleans Saints 35, Detroit Lions 29
+4-Oct Seattle Seahawks 31, Miami Dolphins 23
+4-Oct Baltimore Ravens 31, Washington Football Team 17
+4-Oct Cincinnati Bengals 33, Jacksonville Jaguars 25
+4-Oct Minnesota Vikings 31, Houston Texans 23
+4-Oct Tampa Bay Buccaneers 38, Los Angeles Chargers 31
+4-Oct Los Angeles Rams 17, New York Giants 9
+4-Oct Buffalo Bills 30, Las Vegas Raiders 23
+4-Oct Philadelphia Eagles 25, San Francisco 49ers 20
+5-Oct Kansas City Chiefs 26, New England Patriots 10
+5-Oct Green Bay Packers 30, Atlanta Falcons 16
+8-Oct Chicago Bears 20, Tampa Bay Buccaneers 19
+11-Oct Los Angeles Rams 30, Washington Football Team 10
+11-Oct Carolina Panthers 23, Atlanta Falcons 16
+11-Oct Pittsburgh Steelers 38, Philadelphia Eagles 29
+11-Oct Arizona Cardinals 30, New York Jets 10
+11-Oct Las Vegas Raiders 40, Kansas City Chiefs 32
+11-Oct Baltimore Ravens 27, Cincinnati Bengals 3
+11-Oct Houston Texans 30, Jacksonville Jaguars 14
+11-Oct Miami Dolphins 43, San Francisco 49ers 17
+11-Oct Cleveland Browns 32, Indianapolis Colts 23
+11-Oct Dallas Cowboys 37, New York Giants 34
+11-Oct Seattle Seahawks 27, Minnesota Vikings 26
+12-Oct New Orleans Saints 30, Los Angeles Chargers 27
+13-Oct Tennessee Titans 42, Buffalo Bills 16
+18-Oct Detroit Lions 34, Jacksonville Jaguars 16
+18-Oct Denver Broncos 18, New England Patriots 12
+18-Oct New York Giants 20, Washington Football Team 19
+18-Oct Indianapolis Colts 31, Cincinnati Bengals 27
+18-Oct Tennessee Titans 42, Houston Texans 36
+18-Oct Chicago Bears 23, Carolina Panthers 16
+18-Oct Atlanta Falcons 40, Minnesota Vikings 23
+18-Oct Pittsburgh Steelers 38, Cleveland Browns 7
+18-Oct Baltimore Ravens 30, Philadelphia Eagles 28
+18-Oct Miami Dolphins 24, New York Jets 0
+18-Oct Tampa Bay Buccaneers 38, Green Bay Packers 10
+18-Oct San Francisco 49ers 24, Los Angeles Rams 16
+19-Oct Kansas City Chiefs 26, Buffalo Bills 17
+19-Oct Arizona Cardinals 38, Dallas Cowboys 10
