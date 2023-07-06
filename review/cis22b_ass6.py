@@ -41,7 +41,10 @@ class Teams:
             line = line.rstrip()
             if 'Date' not in line:
                 team1 = line[7:31].rstrip()
-                print(team1)
+                team2 = line[35:60].rstrip()
+                score1 = line[72:74].rstrip()
+                score2 = line[77:79].rstrip()
+                print(team1, '/', team2, '/', score1, '/', score2)
 
             
 
