@@ -2,22 +2,26 @@
 
 # CIS22B - Assignment 6
 
-class Team:
-    def __init__(self, name: str, division: str, conference: str):
-        self._name = name
-        self._division = division
-        self._conference = conference
-        self._wins = 0
-        self._losses = 0
-        self._ties = 0 
-        self._pct = 0.000
+class TeamData:
+    def __init__(self, conf='', div=''):
+        self.conference = conf
+        self.division = div
+        self.wins = 0
+        self.losses = 0
+        self.ties = 0
 
+    def calculate_games_played(self) -> int:
+        return self.wins + self.losses + self.ties
+
+    def percent(self) -> float:
+        return (self.wins + 0.5 * self.ties) / self.games_played
+    
     def __repr__(self):
-        return self._name + self._division + self._conference + str(self._wins)
+        return self.conference + ' ' + self.division
 
 class Teams:
     def __init__(self, teams_file: str, games_file: str):
-        self._teams = []
+        self._teams = {}
         self.get_teams(teams_file)
         self.get_game_data(games_file)
 
@@ -33,7 +37,8 @@ class Teams:
             elif 'FC' in line:
                 division = line[4:]
             else:
-                self._teams.append(Team(line,division,conference))
+                self._teams[line] = TeamData(division,conference)
+                print(line, self._teams[line])
 
     def get_game_data(self, games_file):
         file = open(games_file)
@@ -41,11 +46,11 @@ class Teams:
             line = line.rstrip()
             if 'Date' not in line:
                 team1 = line[7:31].rstrip()
-                team2 = line[35:60].rstrip()
-                score1 = line[72:74].rstrip()
-                score2 = line[77:79].rstrip()
-                print(team1, '/', team2, '/', score1, '/', score2)
+                team2 = line[35:59].rstrip()
+                score1 = str(line[72:74])
+                score2 = str(line[77:79])
+                print(team1,'   ',team2,' ',score1,score2)
 
             
 
-nfl = Teams('teams.txt', 'games.txt')
+nfl = Teams('teams.txt', 'scores.txt')
