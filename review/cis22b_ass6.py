@@ -1,11 +1,19 @@
 #! /usr/bin/python3
 
+import urllib.request
+
 """
 This python module is a solution for the CIS22 assignment 6 located at 
 http://voyager.deanza.edu/~bentley/cis22b/ass6.html
 """
 
 __author__ = "Joe Bentley, joe.deanza@gmail.com"
+
+def convert_binary_string_to_a_list_of_str(bdata):
+    s = ''
+    for c in bdata:
+        s = s + chr(c)
+    return s.split('\r\n')
 
 class TeamData:
     """ Contains data for each team """
@@ -56,23 +64,26 @@ class TeamData:
 
 class Teams:
     """ Contains a dictionary of team name and team data for each team """
-    def __init__(self, teams_file: str, games_file: str):
+    def __init__(self, teams_file_url: str, games_file_url: str):
         """
         Creates a dictionary of team names and data.
-        :param teams_file: input file containing conferences, divisions, and team names
+        :param teams_file: url for input file containing conferences, divisions, and team names
         :param games_file: input file containing game data (team names and points scored for each game)
         """
         self._teams = {}
-        self.get_teams(teams_file)
-        self.get_game_data(games_file)
+        self.get_teams(teams_file_url)
+        self.get_game_data(games_file_url)
 
-    def get_teams(self, teams_file: str):
+    def get_teams(self, teams_file_url: str):
         """ 
         Reads and stores name, division, and conference for each team
-        :param teams_file: input file containing conferences, divisions, and team names
+        :param teams_file_url: url for input file containing conferences, divisions, and team names
         """
-        file = open(teams_file)
-        for line in file:
+        bdata = urllib.request.urlopen(teams_file_url).read()
+        # convert the binary string to a string
+        data = convert_binary_string_to_a_list_of_str(bdata)
+        
+        for line in data:
             line = line.rstrip()
             if len(line) < 2:
                 continue
@@ -83,13 +94,17 @@ class Teams:
             else:
                 self._teams[line] = TeamData(conference, division)
 
-    def get_game_data(self, games_file):
+    def get_game_data(self, games_file_url):
         """ 
         Reads data for each game played.  Determines winner, loser & updates team data
-        :param games_file: input file containing team names and points scored in each game
+        :param games_file_url: url for input file containing team names and points scored in each game
         """
-        file = open(games_file)
-        for line in file:
+        bdata = urllib.request.urlopen(games_file_url).read()
+        # convert the binary string to a string
+        data = convert_binary_string_to_a_list_of_str(bdata)
+        for line in data:
+            if len(line) < 2:
+                continue
             line = line.rstrip()
             if 'Date' not in line:
                 team1 = line[7:31].rstrip()
@@ -122,5 +137,5 @@ class Teams:
 
 
 if __name__ == "__main__":
-    nfl = Teams('teams.txt', 'scores.txt')
+    nfl = Teams('http://voyager.deanza.edu/~bentley/cis22b/teams.txt', 'http://voyager.deanza.edu/~bentley/cis22b/ass6scores.prn')
     nfl.print()
