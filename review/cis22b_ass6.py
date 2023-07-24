@@ -9,11 +9,6 @@ http://voyager.deanza.edu/~bentley/cis22b/ass6.html
 
 __author__ = "Joe Bentley, joe.deanza@gmail.com"
 
-def convert_binary_string_to_a_list_of_str(bdata):
-    s = ''
-    for c in bdata:
-        s = s + chr(c)
-    return s.split('\r\n')
 
 class TeamData:
     """ Contains data for each team """
@@ -49,7 +44,7 @@ class TeamData:
         """
         :return: a formatted string of team statisitics
         """
-        return str(self._wins).rjust(5) + str(self._losses).rjust(5) + str(self._ties).rjust(5) + \
+        return str(self._wins).rjust(5) + str(self._losses).rjust(5) + str(self._ties).rjust(5) +\
             format(self.percent(),'10.3f')
     
     def _sort_key(self) -> float:
@@ -68,7 +63,7 @@ class Teams:
         """
         Creates a dictionary of team names and data.
         :param teams_file: url for input file containing conferences, divisions, and team names
-        :param games_file: input file containing game data (team names and points scored for each game)
+        :param games_file: input file with game data (team names and points scored for each game)
         """
         self._teams = {}
         self.get_teams(teams_file_url)
@@ -79,10 +74,9 @@ class Teams:
         Reads and stores name, division, and conference for each team
         :param teams_file_url: url for input file containing conferences, divisions, and team names
         """
-        bdata = urllib.request.urlopen(teams_file_url).read()
-        # convert the binary string to a string
-        data = convert_binary_string_to_a_list_of_str(bdata)
         
+        data = urllib.request.urlopen(teams_file_url).read().decode().split('\r\n')
+
         for line in data:
             line = line.rstrip()
             if len(line) < 2:
@@ -97,11 +91,11 @@ class Teams:
     def get_game_data(self, games_file_url):
         """ 
         Reads data for each game played.  Determines winner, loser & updates team data
-        :param games_file_url: url for input file containing team names and points scored in each game
+        :param games_file_url: url for input file with team names and points scored in each game
         """
-        bdata = urllib.request.urlopen(games_file_url).read()
-        # convert the binary string to a string
-        data = convert_binary_string_to_a_list_of_str(bdata)
+
+        data = urllib.request.urlopen(games_file_url).read().decode().split('\r\n')
+
         for line in data:
             if len(line) < 2:
                 continue
@@ -131,11 +125,13 @@ class Teams:
             if counter % 16 == 0:
                 print('\n' + item[1]._conference,'Football Conference')
             if counter % 4 == 0:
-                print('\n' + item[1]._division.ljust(5),'Division                W    L    T       Pct')
+                print('\n' + item[1]._division.ljust(5),
+                      'Division                W    L    T       Pct')
             print(item[0].ljust(25),item[1])
             counter += 1      
 
 
 if __name__ == "__main__":
-    nfl = Teams('http://voyager.deanza.edu/~bentley/cis22b/teams.txt', 'http://voyager.deanza.edu/~bentley/cis22b/ass6scores.prn')
+    nfl = Teams('http://voyager.deanza.edu/~bentley/cis22b/teams.txt', 
+                'http://voyager.deanza.edu/~bentley/cis22b/ass6scores.prn')
     nfl.print()
