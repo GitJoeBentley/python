@@ -1,4 +1,4 @@
-#1/usr/bin/python3
+#!/usr/bin/python3
 
 from math import pi
 from math import sqrt
@@ -98,30 +98,5 @@ class Triangle(Shape):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-"""
-    sh = Shape(4,5,"red")
-    print(sh,'\n')
 
-    sq1 = Square(1.0,2.0,3.1,"green")
-    print(sq1)
-    sq2 = Square(1.5,2.5,3.2,"lime green")
-    print(sq2)
-    sq3 = Square(6.7,0.0,3.3,"chartreuse")
-    print(sq3)
-    print('')
-
-    c1 = Circle(0.0,2.0,3.4,"blue")
-    print(c1)
-    c2 = Circle(0.0,2.0,3.5,"peacock blue")
-    print(c2)
-    c3 = Circle(0.0,2.0,3.6,"sapphire")
-    print(c3)
-    print('')
-
-    t1 = Triangle(1.4,2.0,1.1,1.2,1.3,"red")
-    print(t1)
-    t2 = Triangle(1.23,2.0,3,4,5,"cardinal red")
-    print(t2)
-    t3 = Triangle(4.56,2.75,1,1,1,"crimson")
-    print(t3)
-"""
+# To run doctest: python3 -m doctest -v cis22b_ass10_with_doctest.py
