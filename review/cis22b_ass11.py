@@ -95,19 +95,20 @@ if __name__ == '__main__':
         data = line.split()
         if len(data) < 1:
             break
+        args = [float(value) for value in data[1:]]
         match data[0]:
             case 'ki':
-                q = Kite(float(data[1]),float(data[2]),float(data[3]))
+                q = Kite(args[0], args[1], args[2])
             case 'tr':
-                q = Trapezoid(float(data[1]),float(data[2]),float(data[3]),float(data[4]))
+                q = Trapezoid(args[0], args[1], args[2], args[3])
             case 'it':
-                q = IsoscelesTrapezoid(float(data[1]),float(data[2]),float(data[3]))
+                q = IsoscelesTrapezoid(args[0], args[1], args[2])
             case 'pa':
-                q = Parallelogram(float(data[1]),float(data[2]),float(data[3]))
+                q = Parallelogram(args[0], args[1], args[2])
             case 'rh':
-                q = Rhombus(float(data[1]),float(data[2]))
+                q = Rhombus(args[0], args[1])
             case 're':
-                q = Rectangle(float(data[1]),float(data[2]))
+                q = Rectangle(args[0], args[1])
             case 'sq':
-                q = Square(float(data[1]))
+                q = Square(args[0])
         print(q)
