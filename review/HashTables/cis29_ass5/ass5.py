@@ -5,7 +5,6 @@ from hash_table import Hash_table
 from mystring import Mystring
 
 hash_table = Hash_table()
-#with open("testwords.txt") as file:         
 with open("ass5words.txt") as file:         
     for line in file:
         hash_table.insert(line[:-1])
@@ -15,8 +14,7 @@ print("Percent of hash table buckets used = ","{:.2f}".format(100.0 * hash_table
 print("Average non-empty bucket size = ","{:.2f}".format(hash_table.average_non_empty_bucket_size()))
 print("Largest bucket size =",hash_table.largest_bucket_size())
 
-#with open("ihaveadream.txt") as document:
-with open("test.txt") as document:
+with open("ihaveadream.txt") as document:
     for line in document:
         words = line.split()
         for word in words:
