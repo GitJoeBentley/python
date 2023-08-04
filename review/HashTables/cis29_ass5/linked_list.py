@@ -24,8 +24,6 @@ class Linked_List:
 
     def find(self, item):
         temp = self._top
-        if item[:2] == 'ag':
-            print("item=",item," _len=",self._len)
         self.print()
         while temp != None:
             #print("30:",temp._data,temp)
