@@ -10,23 +10,16 @@ class Linked_List:
     def __init__(self):
         self._top = None
         self._len = 0
-        
 
-    def print(self):
-        temp = self._top
-        while temp != None:
-            temp = temp._next
 
     def push(self, item):
         temp = Node(item, self._top)
         self._top = temp
         self._len += 1
 
-    def find(self, item):
+    def __contains__(self, item) -> bool:
         temp = self._top
-        self.print()
         while temp != None:
-            #print("30:",temp._data,temp)
             if temp._data == item:
                 return True
             temp = temp._next
@@ -39,3 +32,9 @@ class Linked_List:
             temp = temp._next
             yield node
         
+    """
+    def print(self):
+        temp = self._top
+        while temp != None:
+            temp = temp._next
+    """
