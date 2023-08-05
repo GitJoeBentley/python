@@ -18,5 +18,7 @@ with open("ihaveadream.txt") as document:
     for line in document:
         words = line.split()
         for word in words:
-            if not hash_table.find(Mystring(word)):
+            word = Mystring(word)
+            word._remove_punctuation()
+            if len(word) and word not in hash_table:
                 print("Not found in the dictionary:",word)
