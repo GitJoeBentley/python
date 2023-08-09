@@ -18,7 +18,7 @@ class Hash_table:
 
     def insert(self, s):
         my_s = Mystring(s)
-        index = my_s._hash % self._size
+        index = hash(my_s) % self._size
         if self._array[index]._len == 0:
             self._in_use  += 1
         try:
@@ -28,10 +28,6 @@ class Hash_table:
             self._number_in_table += 1
         except DuplicateError as e:
             print(e)
-
-    #def print(self):
-    #    for index in range(self._size):
-    #        self._array[index].print()
 
     def average_non_empty_bucket_size(self):
         size = 0
@@ -50,4 +46,5 @@ class Hash_table:
         return size
 
     def __contains__(self, myword):
-        return myword in self._array[myword._hash % self._size]
+        index = hash(myword) % self._size 
+        return myword in self._array[index]
