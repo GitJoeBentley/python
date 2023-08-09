@@ -1,5 +1,5 @@
+from config import hash_table_size
 
-PUNC_CHARACTERS = r"!#%&'()*,-./:;?@\_¡§¶·¿:<>" + '"'
 
 class Mystring(str):
     """
@@ -7,10 +7,11 @@ class Mystring(str):
         and its hash value
     """
 
-    def __init__(self, s: str):
-        self = s.strip(PUNC_CHARACTERS).lower()
+    def __init__(self, s):
+        self = self.lower()
 
     def __hash__(self) -> int:
+        #global hash_table_size
         key = 1;
         for i in range(self.__len__()):
             if (i % 2):
@@ -23,22 +24,21 @@ class Mystring(str):
         key = key + (key << 7);
         key = key ^ (key >> 2);
         key = key * c2;
-        return (key ^ (key >> 13)) & 0xfffffffffffffff;
-
+        return ((key ^ (key >> 13)) & 0xfffffffffffffff) % hash_table_size
+    
     def _remove_punctuation(self):
-        # remove 's
-        if self[-2:] == "'s":
-            self = self[:-2]
+        temp = self.lower()
+        if temp[-2:] == "'s":
+            temp = temp[:-2]
             
         # remove leading non-alpha
-        if not self[0].isalpha():
-            self = self[1:]
+        if len(temp) and not temp[0].isalpha():
+            temp = temp[1:]
             
         # remove trailing non-alpha (twice)
-        if not self[-1:].isalpha():
-            self = self[:-1]
-        if not self[-1:].isalpha():
-            self = self[:-1]
-
-        # Force the return type to be Mystring, not str
-        return Mystring(self)
+        if not temp[-1:].isalpha():
+            temp = temp[:-1]
+        if not temp[-1:].isalpha():
+            temp = temp[:-1]
+            
+        return Mystring(temp)

@@ -1,4 +1,5 @@
-from mystring import Mystring      
+from mystring import Mystring
+import config
 
 class Node:
     def __init__(self, item = None, next = None):
@@ -26,3 +27,12 @@ class Linked_List:
                 return True
             temp = temp._next
         return False
+
+    def __len__(self):
+        sum = 0
+        temp = self._top
+        while temp:
+            data = temp._data
+            temp = temp._next
+            sum += 1
+        return sum
