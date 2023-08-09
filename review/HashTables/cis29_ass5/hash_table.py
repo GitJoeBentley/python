@@ -15,42 +15,27 @@ class Hash_table:
     def __init__(self):
         self._in_use = 0
         self._array = [Linked_List() for i in range(hash_table_size)]
-        self._number_in_table = 0
-    """
-    def __setitem__(self, index, s):
-        if self._array[index]._len == 0:
-            self._in_use  += 1
-            print( self._in_use)
-        try:
-            if self._array[index].__contains__(s):
-                raise(DuplicateError(s))
-            self._array[index].push(my_s)
-            self._number_in_table += 1
-        except DuplicateError as e:
-            print(e)
-    """
-    def __getitem__(self, index):
+
+    def __getitem__(self, index: int):
         return self._array[index]
 
-    def average_non_empty_bucket_size(self):
-        size = 0
+    def average_non_empty_bucket_size(self) -> float:
+        total = 0
         count_buckets = 0
-        for index in range(hash_table_size):
-            if self._array[index]._len:
-                size += self._array[index]._len
-                count_buckets += 1
-        return size / count_buckets
+        for bucket in self._array:
+            if bucket:
+                total += len(bucket)
+                count_buckets += 1            
+        return total / count_buckets
     
     def largest_bucket_size(self):
         size = 0
-        for index in range(hash_table_size):
-            if self._array[index]._len > size:
-                size = self._array[index]._len
+        for bucket in self._array:
+            size = max(size, len(bucket))
         return size
 
-    def __contains__(self, myword):
-        index = hash(myword) 
-        return myword in self._array[index]
+    def __contains__(self, myword): 
+        return myword in self._array[hash(myword)]
     
     def __len__(self):
         return sum([len(bucket) for bucket in self._array if bucket])

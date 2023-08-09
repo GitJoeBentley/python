@@ -18,7 +18,6 @@ class Linked_List:
     def push(self, item):
         temp = Node(item, self._top)
         self._top = temp
-        self._len += 1
 
     def __contains__(self, item) -> bool:
         temp = self._top
@@ -32,7 +31,6 @@ class Linked_List:
         sum = 0
         temp = self._top
         while temp:
-            data = temp._data
             temp = temp._next
             sum += 1
         return sum

@@ -11,7 +11,6 @@ class Mystring(str):
         self = self.lower()
 
     def __hash__(self) -> int:
-        #global hash_table_size
         key = 1;
         for i in range(self.__len__()):
             if (i % 2):
