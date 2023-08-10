@@ -7,22 +7,19 @@ class Mystring(str):
         and its hash value
     """
 
-    def __init__(self, s):
-        self = self.lower()
-
     def __hash__(self) -> int:
-        key = 1;
+        key = 1
         for i in range(self.__len__()):
             if (i % 2):
-                key *= ord(self[i]) - 96;
+                key *= ord(self[i]) - 96
             else:
-                key += ord(self[i]) - 96;
+                key += ord(self[i]) - 96
 
         c2 = 0xabcdef0127d4eb4b
-        key = (key ^ 59) ^ (key >> 15);
-        key = key + (key << 7);
-        key = key ^ (key >> 2);
-        key = key * c2;
+        key = (key ^ 59) ^ (key >> 15)
+        key = key + (key << 7)
+        key = key ^ (key >> 2)
+        key = key * c2
         return ((key ^ (key >> 13)) & 0xfffffffffffffff) % hash_table_size
     
     def _remove_punctuation(self):

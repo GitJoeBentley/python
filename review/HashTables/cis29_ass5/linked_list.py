@@ -5,15 +5,12 @@ class Node:
     def __init__(self, item = None, next = None):
         self._data = item
         self._next = next
-        
-    def __repr__(self):
-        return self._data
 
 
 class Linked_List:
     def __init__(self):
         self._top = None
-        self._len = 0
+        #self._len = 0
 
     def push(self, item):
         temp = Node(item, self._top)

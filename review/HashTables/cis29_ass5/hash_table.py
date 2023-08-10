@@ -13,7 +13,7 @@ class DuplicateError(Exception):
 
 class Hash_table:
     def __init__(self):
-        self._in_use = 0
+        #self._in_use = 0
         self._array = [Linked_List() for i in range(hash_table_size)]
 
     def __getitem__(self, index: int):

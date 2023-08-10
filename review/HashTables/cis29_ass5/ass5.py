@@ -23,7 +23,7 @@ with open("ihaveadream.txt") as document:
         words = line.split()
         for word in words:
             new_word = Mystring(word)._remove_punctuation()
-            if new_word and len(new_word) and new_word not in hash_table:
+            if new_word and new_word not in hash_table:
                 print("Not found in the dictionary:",new_word)
                 misspelled_words += 1
     print("Total mispelled words = ", misspelled_words)
