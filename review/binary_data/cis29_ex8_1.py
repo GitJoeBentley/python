@@ -1,5 +1,12 @@
 #!/usr/bin/python3
 
+"""
+This module is a python solution for the CIS29 Example 8-1
+http://voyager.deanza.edu/~bentley/cis29/examples/ex8-1.cpp
+"""
+
+__author__ = "Joe Bentley, joe.deanza@gmail.com"
+
 def printBits(value):
     if type(value).__name__ == 'str' and len(value) == 1:
         print(value.rjust(8),'=','{0:08b}'.format(ord(value)))
