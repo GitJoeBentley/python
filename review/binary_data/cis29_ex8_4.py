@@ -14,7 +14,9 @@ def printBits(text, num_bits = 8):
     value = eval(text)
     svalue = str(value)
     if num_bits == 8:
-        print(expr + '='+svalue.rjust(5),'{0:08b}'.format(value))
+        print(expr + '=' + svalue.rjust(5),'{0:08b}'.format(value))
+    elif num_bits == 0:
+        print(expr + '=', str(bool(value)))
     else:
         bdata = '{0:032b}'.format(value)
         bdata = bdata[0:8] + ' ' + bdata[8:16] + ' ' + bdata[16:24]+ ' ' + bdata[24:32]
@@ -48,6 +50,6 @@ print('')
 a = 34
 printBits('a')
 printBits('2')
-printBits('a & 2')
-
-
+printBits('a & 2', 0)
+printBits('4')
+printBits('a & 4', 0)
