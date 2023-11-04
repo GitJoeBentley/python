@@ -23,7 +23,7 @@ class Teams:
             data.calculate_pct()
             data.calculate_average_margin()
             data.calculate_momentum(team)
-            #team.calculate_home_team_advantage()
+            data.calculate_home_team_advantage(team)
         #for team in self.teams.values():
         #    team.calculate_difficulty_of_schedule(self)
 
