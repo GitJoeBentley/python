@@ -44,8 +44,6 @@ class TeamData:
 
     def calculate_momentum(self, team: str):
         momentum = 0.0
-        # Note: Denominator might start at 'self.games_played' or 'self.games_played + 1'
-        #denominator = float(self.games_played)
         denominator = float(self.games_played + 1)
         sum_cofficients = 0.0
         for game in self.games:
@@ -60,13 +58,18 @@ class TeamData:
                 denominator -= 1
         self.momentum = momentum / sum_cofficients
 
-    def calculate_home_team_advantage(self):
+    def calculate_home_team_advantage(self, team: str):
         sum_margins = 0.0
+        if team == 'San Francisco 49ers':
+            print("here')")
         for game in self.games:
             if game.played:
-                margin = game.score - game.opponent_score 
+                if game.winner == team:
+                    margin = game.winner_score - game.loser_score
+                else:
+                    margin = game.loser_score - game.winner_score
                 # if home game, add margin to sum_margins
-                if game.home_away == 'H':
+                if (margin > 0 and game.is_a_home_game_for_winner) or (margin < 0 and not game.is_a_home_game_for_winner):
                     sum_margins += margin
                 else:
                     sum_margins -= margin
