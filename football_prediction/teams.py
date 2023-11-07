@@ -24,8 +24,8 @@ class Teams:
             data.calculate_average_margin()
             data.calculate_momentum(team)
             data.calculate_home_team_advantage(team)
-        #for team in self.teams.values():
-        #    team.calculate_difficulty_of_schedule(self)
+        for team, data in self.teams.items():
+            data.calculate_difficulty_of_schedule(team, self.teams)
 
 
     def sortkey(self,teamdata):
@@ -59,7 +59,9 @@ class Teams:
                               data.average_margin,
                               data.momentum,
                               data.difficulty_of_schedule,
-                              data.home_team_advantage
+                              data.home_team_advantage,
+                              data.yards_gained / data.games_played,
+                              data.yards_given_up / data.games_played
                               ])
             
         self._sort_for_standings(teamslist)
@@ -72,11 +74,12 @@ class Teams:
                 else:
                     print("\nNational Football Conference")
             if count % 4 == 0:
-                print("\n%-5s"%each[2],"%70s"%"W   L   T   Pct    PF   PA  AvMg   Mom  DoS   HA")
+                print("\n%-5s"%each[2],"%80s"%"W   L   T   Pct    PF   PA  AvMg   Mom  DoS   HA  Yd+  Yd-")
                 
             print("%-25s"%each[0],"%3d"%each[3],"%3d"%each[4],"%3d"%each[5],\
                   "%6.3f"%each[6],"%4d"%each[7],"%4d"%each[8],"%5.1f"%each[9],\
-                  "%5.1f"%each[10],"%4.1f"%each[11],"%4.1f"%each[12])
+                  "%5.1f"%each[10],"%4.1f"%each[11],"%4.1f"%each[12],
+                  "%4.0f"%each[13],"%4.0f"%each[14])
             count+=1
 
     def _swap(self,team1,team2):

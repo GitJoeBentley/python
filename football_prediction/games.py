@@ -71,7 +71,8 @@ class Games:
                     pos = line.find("yards_lose", pos2)
                     pos = line.find(">", pos + 1);
                     pos2 = line.find("<", pos)
-                    loser_yards = int(line[pos + 1: pos2])                  
+                    loser_yards = int(line[pos + 1: pos2])
+                                    
                     NFL.teams[winner].wins = NFL.teams[winner].wins + 1
                     NFL.teams[loser].losses = NFL.teams[loser].losses + 1
                     
@@ -85,7 +86,11 @@ class Games:
                     NFL.teams[winner].yards_gained = NFL.teams[winner].yards_gained + winner_yards
                     NFL.teams[winner].yards_given_up = NFL.teams[winner].yards_given_up + loser_yards
                     NFL.teams[loser].yards_gained = NFL.teams[loser].yards_gained + loser_yards
-                    NFL.teams[loser].yards_given_up = NFL.teams[winner].yards_given_up + winner_yards
+                    NFL.teams[loser].yards_given_up = NFL.teams[loser].yards_given_up + winner_yards
+                    
+                    if winner == 'San Francisco 49ers' or loser == 'San Francisco 49ers':
+                        print(winner, loser, winner_yards, loser_yards, NFL.teams['San Francisco 49ers'].yards_given_up)
+                    
                     NFL.teams[winner].games_played += 1
                     NFL.teams[loser].games_played += 1
 

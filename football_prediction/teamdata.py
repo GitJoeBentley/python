@@ -60,8 +60,6 @@ class TeamData:
 
     def calculate_home_team_advantage(self, team: str):
         sum_margins = 0.0
-        if team == 'San Francisco 49ers':
-            print("here')")
         for game in self.games:
             if game.played:
                 if game.winner == team:
@@ -75,9 +73,14 @@ class TeamData:
                     sum_margins -= margin
         self.home_team_advantage = sum_margins / self.games_played            
 
-    def calculate_difficulty_of_schedule(self,teams):
+    def calculate_difficulty_of_schedule(self, team, teams):
         sum_of_opponent_average_margin = 0.0
+        
         for game in self.games:
             if game.played:
-                sum_of_opponent_average_margin += teams.teams[game.opponent].average_margin
+                if game.winner  == team:
+                    opponent = game.loser
+                else:
+                    opponent = game.winner
+                sum_of_opponent_average_margin += teams[opponent].average_margin
         self.difficulty_of_schedule += sum_of_opponent_average_margin / self.games_played
