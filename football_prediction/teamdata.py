@@ -20,6 +20,7 @@ class TeamData:
         self.points_against = 0
         self.yards_gained = 0
         self.yards_given_up = 0
+        self.average_yards_delta = 0.0
         self.average_margin = 0
         self.momentum = 0.0
         self.difficulty_of_schedule = 0.0
@@ -31,7 +32,9 @@ class TeamData:
             game.print()
 
     def calculate_strength(self):
-        self.strength = 0.5 * self.average_margin + 0.5 * self.momentum + self.difficulty_of_schedule
+        #self.strength = 0.5 * self.average_margin + 0.5 * self.momentum + self.difficulty_of_schedule
+        self.strength = 0.4 * self.average_margin + 0.4 * self.momentum + \
+            0.2 * self.average_yards_delta * self.games_played / 100.0 + self.difficulty_of_schedule
 
     def calculate_games_played(self):
         self.games_played = self.wins + self.losses + self.ties

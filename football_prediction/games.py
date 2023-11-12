@@ -46,6 +46,11 @@ class Games:
                 if line.find("preview", pos2) != -1:
                     if pending_week == 0:
                         pending_week = week
+                    winner_score = 0
+                    loser_score = 0
+                    winner_yards = 0
+                    loser_yars = 0
+                    is_a_home_game_for_winner = False
                 else:
                     # get winner's score
                     pos = line.find("pts_win", pos2)
@@ -88,14 +93,10 @@ class Games:
                     NFL.teams[loser].yards_gained = NFL.teams[loser].yards_gained + loser_yards
                     NFL.teams[loser].yards_given_up = NFL.teams[loser].yards_given_up + winner_yards
                     
-                    if winner == 'San Francisco 49ers' or loser == 'San Francisco 49ers':
-                        print(winner, loser, winner_yards, loser_yards, NFL.teams['San Francisco 49ers'].yards_given_up)
-                    
                     NFL.teams[winner].games_played += 1
                     NFL.teams[loser].games_played += 1
 
                     played = True
-                    
 
                 current_game = Game(week, winner, loser, winner_score, loser_score, winner_yards, loser_yards, is_a_home_game_for_winner, played)
                 self.games.append(current_game)
@@ -111,3 +112,17 @@ class Games:
                 games.append(game)
         return games
     
+    def get_pending_week(self):
+        pending_week = 25
+        for game in self.games:
+            if not game.played and game.week < pending_week:
+                pending_week = game.week
+        return pending_week;
+    
+    def get_pending_games(self, pending_week):
+        pending_games = []
+        
+        for game in self.games:
+            if game.week == pending_week and not game.played:
+                pending_games.append(game)
+        return pending_games
