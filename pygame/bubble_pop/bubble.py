@@ -5,7 +5,7 @@ from random import randint
 
 class Bubble(pygame.sprite.Sprite):
     def __init__(self, image: pygame.Surface, position: (int, int), direction: (float, float) = (0,0), 
-                 size: float = 1.0, speed: int = 7, bounce = False) -> None:
+                 size: float = 1.0, speed: int = 5, bounce = False) -> None:
         super().__init__()
         self.image = image
         size = int(100*size)
@@ -29,15 +29,15 @@ class Bubble(pygame.sprite.Sprite):
         if deltax == 0 and deltay == 0:
             self.speed += 1
         if (self.bounce):
-            if self.rect.right >= WINDOW_WIDTH or self.rect.left <= 0:
+            if self.rect.right >= WindowWidth or self.rect.left <= 0:
                 self.direction = (-self.direction[0], self.direction[1])
-            if self.rect.top <= 0 or self.rect.bottom >= int(0.931 * WINDOW_HEIGHT):
+            if self.rect.top <= 0 or self.rect.bottom >= int(0.931 * WindowHeight):
                 self.direction = (self.direction[0], -self.direction[1])
     
     def out_of_bounds(self) -> bool:
-        if self.rect.right >= WINDOW_WIDTH or self.rect.left <= 0:
+        if self.rect.right >= WindowWidth or self.rect.left <= 0:
                 return True
-        if self.rect.top <= 0 or self.rect.bottom >= int(0.931 * WINDOW_HEIGHT):
+        if self.rect.top <= 0 or self.rect.bottom >= int(0.931 * WindowHeight):
                 return True
         return False
 
