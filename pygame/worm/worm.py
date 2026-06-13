@@ -24,13 +24,8 @@ class Worm(pygame.sprite.Sprite):
         self.segments.append(segment)
         sprite_group.add(segment)
 
-
-    def move(self, rock_group, apple) -> str:
-        # move the first segment to the current head location
-        #self.segments[0].rect.center = self.rect.center
+    def advance_position(self):
         save_head_location = self.rect.center
-        collide_with = None
-
         # move the head
         match self.direction:
             case "Up":
@@ -47,6 +42,29 @@ class Worm(pygame.sprite.Sprite):
             self.segments[i].rect.center = self.segments[i-1].rect.center
         self.segments[0].rect.center = save_head_location
 
+    def move(self, rock_group, apple) -> str:
+        # move the first segment to the current head location
+        
+        collide_with = None
+
+        self.advance_position()
+        """
+        # move the head
+        match self.direction:
+            case "Up":
+                self.rect.centery -= self.speed
+            case "Down":
+                self.rect.centery += self.speed
+            case "Left":
+                self.rect.centerx -= self.speed
+            case "Right":
+                self.rect.centerx += self.speed
+        
+        # advance the remaining segments
+        for i in range(len(self.segments) - 1, 0, -1):
+            self.segments[i].rect.center = self.segments[i-1].rect.center
+        self.segments[0].rect.center = save_head_location
+        """
         if self.out_of_bounds():
             self.reverse_direction()
             collide_with = 'edge'
@@ -84,6 +102,7 @@ class Worm(pygame.sprite.Sprite):
             case "Down": self.direction = "Up"
             case "Left": self.direction = "Right"
             case "Right": self.direction = "Left"
+        self.advance_position()
 
 class Segment(pygame.sprite.Sprite):
     def __init__(self, image, last_segment_location) -> None:

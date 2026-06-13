@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from misc_func import *
 from random import randint
 
 class Apple(pygame.sprite.Sprite):

@@ -1,6 +1,7 @@
 import pygame
 import math
 from settings import *
+from misc_func import *
 from random import randint
 
 class Rock(pygame.sprite.Sprite):

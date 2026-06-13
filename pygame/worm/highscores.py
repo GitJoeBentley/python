@@ -47,26 +47,9 @@ class HighScores:
         if len(self.scores) == 0:
             s = "No high scores recorded"
         else:
-            s = "  ******************* High Scores *******************\n\n     Name           Score      Apples       Date\n"
+            s = "  ****************** High Scores *****************\n     Name           Score      Apples       Date\n"
             for rec in self.scores:
                 s = s + str(counter).rjust(3) + "  " + rec[0].ljust(16) + str(rec[1]).rjust(3) + \
                     str(rec[2]).rjust(13) + rec[3].strftime("%m/%d/%y").rjust(13) + '\n'
                 counter += 1
         return s
-        
-        
-"""
-if __name__ == '__main__':
-    h = HighScores()
-    #h.read_from_file()
-    #h.print()
-    h.scores.append(("Pete",randint(10,15),randint(1,10),date.fromisoformat('2019-01-15')))
-    h.scores.append(("Harry",randint(90,95),randint(1,10),date.fromisoformat('2025-05-15')))
-    h.scores.append(("Joe",randint(80,95),randint(1,10),date.fromisoformat('2025-05-15')))
-    h.print()
-    print("")
-    # sort
-    h.sort()
-    h.print()
-    h.write_to_file()
-    """

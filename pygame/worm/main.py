@@ -1,25 +1,14 @@
 import pygame, time
 from random import randint
 from settings import *
+from misc_func import *
 from rock import Rock
 from apple import Apple
 from worm import Worm
 from highscores import HighScores
 from datetime import date
 
-
-def display_status(font, applesEaten: int, wallCollisions: int, rockCollisions: int, score: int):
-    status_str = "Apples Eaten " + str(applesEaten).ljust(6) + "Wall Collisions " + str(wallCollisions).ljust(6) + \
-        "Rock Collisions " + str(rockCollisions).ljust(7) + "Score " + str(score).ljust(4)
-    text = font.render(status_str, True,(50, 200, 50))
-    # create a rectangular object for the text surface object
-    textRect = text.get_rect()
-    # set the center of the rectangular object.
-    textRect.center = (WindowWidth // 2, int(.97 * WindowHeight))
-    window.blit(text, textRect)
-
-
-if __name__ == '__main__':
+def main():
     clock = pygame.time.Clock()
     FPS = 30     # frames per second
     frame_sleep_time = 0.15
@@ -35,8 +24,9 @@ if __name__ == '__main__':
     window = pygame.display.set_mode((WindowWidth, WindowHeight))
     pygame.display.set_caption("Joe's Hungry Worm")
     background = pygame.image.load("resources/grass.png").convert_alpha()
+    background_rect = background.get_rect()
     statusBar = pygame.Surface((WindowWidth, 56))
-    statusBarRect = statusBar.get_frect()
+    statusBarRect = statusBar.get_rect()
     statusBarRect.bottomleft = (0, WindowHeight)
     statusBar.fill("black")
 
@@ -61,6 +51,8 @@ if __name__ == '__main__':
     apple_image.set_colorkey((34,177,76))
     
     highscores = HighScores()
+
+    isCollision: Bool = False
 
     name = start(window, highscores, arial)
     while playAgain:
@@ -90,20 +82,23 @@ if __name__ == '__main__':
                     if event.key == pygame.K_ESCAPE:
                         pause = not pause
 
-                    if not pause and event.key == pygame.K_UP:
+                    if not pause and (event.key == pygame.K_UP or event.key == pygame.K_w):
                         worm.direction = "Up"
-                    if not pause and event.key == pygame.K_DOWN:
+                    if not pause and (event.key == pygame.K_DOWN or event.key == pygame.K_s):
                         worm.direction = "Down"
-                    if not pause and event.key == pygame.K_LEFT:
+                    if not pause and (event.key == pygame.K_LEFT or event.key == pygame.K_a):
                         worm.direction = "Left"
-                    if not pause and event.key == pygame.K_RIGHT:
+                    if not pause and (event.key == pygame.K_RIGHT or event.key == pygame.K_d):
                         worm.direction = "Right"
             if not pause:
-                match worm.move(rock_group, apple):
+                intersects_with = worm.move(rock_group, apple)
+                match intersects_with:
                     case "apple":
                         bite_sound.play()
                         apple = Apple(apple_image, sprite_group)
                         worm.add_segment(sprite_group)
+                        # speed up the worm
+                        worm.speed += 1
                         applesEaten += 1
                         if applesEaten % 3 == 0:
                             Rock(rock_images[i % 3], sprite_group, rock_group)
@@ -111,28 +106,36 @@ if __name__ == '__main__':
                     case "rock":
                         ouch_sound.play()
                         rockCollisions += 1
+                        intersects_with = ""
+                        isCollision = True
                     case "edge":
                         doh_sound.play()
                         wallCollisions += 1
+                        isCollision = True
+                        intersects_with = ""
+                    case "":
+                        pass
                     case _:
                         pass
 
                 score = 10 * applesEaten - wallCollisions - rockCollisions                
 
             # draw the game
-            window.blit(background)
+            window.blit(background, background_rect)
             window.blit(statusBar, statusBarRect)
             sprite_group.clear(window, background)
             sprite_group.update(window)
             sprite_group.draw(window)
             worm_group.update(window)
             worm_group.draw(window)
-            display_status(arial , applesEaten, wallCollisions, rockCollisions, score)
+            display_status(window, arial , applesEaten, wallCollisions, rockCollisions, score)
 
             pygame.display.update()
             time.sleep(frame_sleep_time)
-            if wallCollisions + rockCollisions == 10:
-                running = False
+            if isCollision:
+                isCollision = False
+                if wallCollisions + rockCollisions == 10:
+                    running = False
         endofgame_sound.play()
         game_over(window, score)
         if score > 0:
@@ -145,3 +148,8 @@ if __name__ == '__main__':
             sprite_group.empty()
             running = True
     pygame.quit()
+
+
+if __name__ == '__main__':
+    main()
+    
