@@ -6,4 +6,3 @@ you will keep all of the points that you have earned (maybe it will get
 you into the top 10 scores).  Each time you eat an apple, the worm will
 grow and the game will speed up.  You are allowed only 10 collisions with
 the wall or a rock.  Good luck and happy eating!
-
