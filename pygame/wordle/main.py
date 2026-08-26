@@ -13,7 +13,6 @@ if __name__ == "__main__":
       status = Status.COMPLETED
    else:
       status = Status.NEW_GAME
-   #print(stats.lastDate)
 
    if status == Status.COMPLETED:
       game = Game(stats, status)
@@ -25,4 +24,3 @@ if __name__ == "__main__":
             
       if game.status == Status.EXIT:
          break
-   print("Game Over")

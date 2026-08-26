@@ -191,7 +191,15 @@ class Game:
         self.status = self.stats.display_stats(self.window, result, guesses, self.tiles)
 
     def updateStats(self, result, guesses):
+        #self.stats.lastDate = date.today()
+        if self.stats.lastDate:
+            sinceLast = (date.today() - self.stats.lastDate).days
+        else:
+            sinceLast = 0
+
+        print("Number of days since last game:", sinceLast)
         self.stats.lastDate = date.today()
+
         self.stats.played += 1
         self.stats.gameNumber += 1
         self.stats.tiles = self.tiles
@@ -208,12 +216,15 @@ class Game:
                 #print(ascii_code * 100 + color_code, end=' ')
                 temp.append(ascii_code * 100 + color_code)
             self.stats.tileContents.append(temp)              
-            #print("")
 
         if result:
             self.stats.numberOfGuesses = guesses
             self.stats.distribution[guesses] += 1
-            self.stats.currentStreak += 1
+            if sinceLast < 2:
+                self.stats.currentStreak += 1
+            else:
+                self.stats.currentStreak = 1
+            
             if self.stats.currentStreak > self.stats.maxStreak:
                 self.stats.maxStreak = self.stats.currentStreak
         else:
@@ -261,5 +272,3 @@ class Game:
                     self.tiles[row][col].draw(self.window)
             
             pygame.display.flip()
-
-
