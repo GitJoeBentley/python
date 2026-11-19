@@ -1,2 +1,2 @@
 # python
-This is the second Python version of my NFL Football Prediction program
+This are various python programs that I've written
