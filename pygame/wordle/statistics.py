@@ -6,17 +6,41 @@ import math
 import sys
 from button import Button
 from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
+import win32clipboard
+
+
+def send_to_clipboard(filepath):
+    # Open the image and convert it to RGB (required for BMP)
+    image = Image.open(filepath).convert("RGB")
+
+    # Save the image as a BMP to an in-memory buffer
+    output = BytesIO()
+    image.save(output, "BMP")
+
+    # Strip the 14-byte BMP file header to get raw DIB data
+    data = output.getvalue()[14:]
+    output.close()
+
+    # Open, clear, and write to the Windows clipboard
+    win32clipboard.OpenClipboard()
+    win32clipboard.EmptyClipboard()
+    win32clipboard.SetClipboardData(win32clipboard.CF_DIB, data)
+    win32clipboard.CloseClipboard()
+
 
 class Statistics:
     def __init__(self):
         self.gameNumber: int = 0
-        self.lastDate: date = None           # last date played
-        self.played: int = 0                 # number of games played
-        self.distribution: [int] = [0] * 7   # distribution of guesses per game
-        self.currentStreak = 0               # number of consecutive games won
-        self.maxStreak = 0                   # max number of consecutive games won
-        self.numberOfGuesses = 0             # number of guesses in a completed game
-        self.tileContents = [[0]*5] *6       # contains the (letter/evaluation) history of the last active game
+        self.lastDate: date = None  # last date played
+        self.played: int = 0  # number of games played
+        self.distribution: [int] = [0] * 7  # distribution of guesses per game
+        self.currentStreak = 0  # number of consecutive games won
+        self.maxStreak = 0  # max number of consecutive games won
+        self.numberOfGuesses = 0  # number of guesses in a completed game
+        self.tileContents = [
+            [0] * 5
+        ] * 6  # contains the (letter/evaluation) history of the last active game
         self.tiles = []
 
     # classmethod is bound to the class itself rather than a specific instance of that class.
@@ -28,17 +52,20 @@ class Statistics:
         except FileNotFoundError:
             print("No stats file")
             return Statistics()
-    
+
     def writeStatsFile(self, statsObject):
         with open(StatsFile, "wb") as file:
             pickle.dump(statsObject, file)
 
     def display_stats(self, window, result, guesses, tiles):
-        stats_window_size = (0.7 * GameSize[0],  0.8 * GameSize[1]) 
-        stats = pygame.Rect((GameSize[0] / 2,  GameSize[1] / 2), stats_window_size)
-        stats.center = (0.5 * GameSize[0],  0.5 * GameSize[1])
-        border = pygame.Rect((GameSize[0] / 2,  GameSize[1] / 2), (stats_window_size[0] + 10, stats_window_size[1] + 10))
-        border.center = (0.5 * GameSize[0],  0.5 * GameSize[1])
+        stats_window_size = (0.7 * GameSize[0], 0.8 * GameSize[1])
+        stats = pygame.Rect((GameSize[0] / 2, GameSize[1] / 2), stats_window_size)
+        stats.center = (0.5 * GameSize[0], 0.5 * GameSize[1])
+        border = pygame.Rect(
+            (GameSize[0] / 2, GameSize[1] / 2),
+            (stats_window_size[0] + 10, stats_window_size[1] + 10),
+        )
+        border.center = (0.5 * GameSize[0], 0.5 * GameSize[1])
         X = Font30.render("x", True, White)
         X_rec = X.get_rect()
         X_rec.topright = (stats.right - 6, stats.top + 1)
@@ -53,9 +80,13 @@ class Statistics:
             guesses = 7
         result_text = TimesFont30.render(ResultTxt[guesses], True, Black)
         result_text_rec = result_text.get_rect()
-        result_text_rec.center = (GameSize[0] / 2,  stats.top + 100)
+        result_text_rec.center = (GameSize[0] / 2, stats.top + 100)
 
-        labels = Font20.render("    Played         Win %        Current Streak            Max Streak", True, Black)
+        labels = Font20.render(
+            "    Played         Win %        Current Streak            Max Streak",
+            True,
+            Black,
+        )
         labels_rec = labels.get_rect()
         labels_rec.center = (stats.centerx, stats.top + 195)
 
@@ -68,75 +99,115 @@ class Statistics:
         next_wordle_rec.center = (stats.centerx, stats.bottom - 55)
 
         pct = int(100 * sum(self.distribution) / self.played)
-        stats_str = str(self.played).rjust(3) + str(pct).rjust(10) + str(self.currentStreak).rjust(14) + str(self.maxStreak).rjust(19) 
+        stats_str = (
+            str(self.played).rjust(3)
+            + str(pct).rjust(10)
+            + str(self.currentStreak).rjust(14)
+            + str(self.maxStreak).rjust(19)
+        )
         stats_text = Font32.render(stats_str, True, Black)
         stats_text_rec = stats_text.get_rect()
         stats_text_rec.center = (stats.centerx, stats.top + 171)
         maxbarlength = 500
-        barlength = [maxbarlength * self.distribution[i]/self.played for i in range(7)]
+        barlength = [
+            maxbarlength * self.distribution[i] / self.played for i in range(7)
+        ]
 
-        shareButton = Button(20, 80, (stats.centerx + 140, stats.top + 500), Green, "Share")
-        exitButton = Button(20, 80, (stats.centerx, stats.top + 500), Orange, "Exit", Black)
-        practiceButton = Button(20, 80, (stats.centerx - 140, stats.top + 500), Green, "Practice")
+        shareButton = Button(
+            20, 80, (stats.centerx + 140, stats.top + 500), Green, "Share"
+        )
+        exitButton = Button(
+            20, 80, (stats.centerx, stats.top + 500), Orange, "Exit", Black
+        )
+        practiceButton = Button(
+            20, 80, (stats.centerx - 140, stats.top + 500), Green, "Practice"
+        )
 
         filename = "resources/" + ResultsEmojiFilename[guesses]
         resultEmoji = MySprite(filename, stats.centerx, stats.top + 51)
-        
+
         while True:
             for event in pygame.event.get():
-                #if event.type == pygame.QUIT:
+                # if event.type == pygame.QUIT:
                 #    return
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    
+
                     if event.button == 1:
-                        if pygame.math.Vector2(event.pos).distance_to(X_rec.center) < 20 or \
-                            pygame.math.Vector2(event.pos).distance_to(backtopuzzle_rec.center) < 25:
-                            return
-                        
-                        if pygame.math.Vector2(event.pos).distance_to(exitButton.text_rect.center) < 18.4:
-                            print("statistics.py 96")
+                        if (
+                            pygame.math.Vector2(event.pos).distance_to(X_rec.center)
+                            < 20
+                            or pygame.math.Vector2(event.pos).distance_to(
+                                backtopuzzle_rec.center
+                            )
+                            < 25
+                        ):
+                            return Status.BACK_TO_PUZZLE
+
+                        if (
+                            pygame.math.Vector2(event.pos).distance_to(
+                                exitButton.text_rect.center
+                            )
+                            < 18.4
+                        ):
                             return Status.EXIT
 
-                        if pygame.math.Vector2(event.pos).distance_to(shareButton.text_rect.center) < 50:
+                        if (
+                            pygame.math.Vector2(event.pos).distance_to(
+                                shareButton.text_rect.center
+                            )
+                            < 50
+                        ):
                             img = self.copyGameImage(guesses, tiles)
                             filename = "results" + str(self.gameNumber) + ".png"
                             img.save(filename)
-                            #message(window, "Game results written to file " + filename)
-                            return Status.COMPLETED
+                            send_to_clipboard(filename)
+                            break
 
-                        if pygame.math.Vector2(event.pos).distance_to(practiceButton.text_rect.center) < 50:
+                        if (
+                            pygame.math.Vector2(event.pos).distance_to(
+                                practiceButton.text_rect.center
+                            )
+                            < 50
+                        ):
                             print("Practice requested")
                             return Status.PRACTICE
 
             pygame.draw.rect(window, (0, 0, 150), border)
             pygame.draw.rect(window, (245, 245, 245), stats)
             pygame.draw.rect(window, (200, 0, 0), (stats.right - 25, stats.top, 26, 26))
-        
+
             window.blit(backtopuzzle, backtopuzzle_rec)
             window.blit(X, X_rec)
-            window.blit(title,title_rec)
+            window.blit(title, title_rec)
             window.blit(result_text, result_text_rec)
-            window.blit(labels,labels_rec)
+            window.blit(labels, labels_rec)
             window.blit(dist_title, dist_title_rec)
             window.blit(stats_text, stats_text_rec)
             window.blit(next_wordle, next_wordle_rec)
 
             # Draw guess distribution
-            for i in range(1,7):
+            for i in range(1, 7):
                 if i == guesses:
                     barcolor = Green
                 else:
                     barcolor = DarkGrey
-                
+
                 number = Font24.render(str(i), True, Black)
                 number_rec = number.get_rect()
                 number_rec.topleft = (stats.left + 70, stats.top + 235 + 32 * i)
                 window.blit(number, number_rec)
-                pygame.draw.rect(window, barcolor, (stats.left + 84, stats.top + 231 + 32 * i, barlength[i] + 16, 24))
+                pygame.draw.rect(
+                    window,
+                    barcolor,
+                    (stats.left + 84, stats.top + 231 + 32 * i, barlength[i] + 16, 24),
+                )
 
                 number = Font20.render(str(self.distribution[i]).rjust(2), True, White)
                 number_rec = number.get_rect()
-                number_rec.topleft = (stats.left + 74 + barlength[i] - 3, stats.top + 237 + 32 * i)
+                number_rec.topleft = (
+                    stats.left + 74 + barlength[i] - 3,
+                    stats.top + 237 + 32 * i,
+                )
                 window.blit(number, number_rec)
             # Determine next time
             now = datetime.now()
@@ -145,42 +216,51 @@ class Statistics:
             sec_til_midnight = int((midnight - now).total_seconds())
             hrs = sec_til_midnight // 3600
             min = (sec_til_midnight - hrs * 3600) // 60
-            sec = sec_til_midnight - hrs * 3600 - min * 60 
-            time_str = str(hrs).rjust(2,'0') + ':' + str(min).rjust(2,'0') + ':' + str(sec).rjust(2,'0')
+            sec = sec_til_midnight - hrs * 3600 - min * 60
+            time_str = (
+                str(hrs).rjust(2, "0")
+                + ":"
+                + str(min).rjust(2, "0")
+                + ":"
+                + str(sec).rjust(2, "0")
+            )
             time_text = Font36.render(time_str, True, Red)
             time_text_rec = time_text.get_rect()
             time_text_rec.center = (stats.centerx, stats.bottom - 25)
             window.blit(time_text, time_text_rec)
-            #window.blit(shareButton.image, shareButton.rect)
+            # window.blit(shareButton.image, shareButton.rect)
             shareButton.draw(window)
             exitButton.draw(window)
             practiceButton.draw(window)
-            #window.blit(practiceButton.image, practiceButton.rect)
+            # window.blit(practiceButton.image, practiceButton.rect)
             window.blit(resultEmoji.image, resultEmoji.rect)
             pygame.display.flip()
         return
 
     def copyGameImage(self, guesses, tiles) -> Image:
-        img = Image.new("RGB", (200, 200), (255, 255, 255))
+        img = Image.new("RGB", (220, 220), (255, 255, 255))
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype("arial.ttf", 16)
-        draw.text((42, 15), "Wordle " + str(self.gameNumber) + "  " + str(guesses) + "/6", fill="black", font=font)
-        y1 = 20
+        draw.text(
+            (35, 15),
+            "Python Wordle by Joe\n         #"
+            + str(self.gameNumber)
+            + "    "
+            + str(guesses)
+            + "/6",
+            fill="black",
+            font=font,
+        )
+        y1 = 35
         for row in range(guesses):
             y1 += 22
             y2 = y1 + 20
-            x1 = 20
+            x1 = 31
             for col in range(5):
                 ascii_code = ord(tiles[row][col].letter)
                 color_code = [Grey, Yellow, Green].index(tiles[row][col].color)
                 x1 += 22
                 x2 = x1 + 20
-                
+
                 draw.rectangle((x1, y1, x2, y2), fill=[Grey, Yellow, Green][color_code])
         return img
-
-
-            
-
-
-
